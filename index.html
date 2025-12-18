@@ -315,15 +315,15 @@
         }
         
         .highlight-box {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             border-radius: var(--border-radius);
             padding: 22px;
-            border: 1px solid #fecaca;
+            border: 1px solid #bae6fd;
             margin-top: 24px;
         }
         
         .highlight-title {
-            color: var(--danger-color);
+            color: var(--primary-color);
             font-weight: 700;
             margin-bottom: 12px;
             display: flex;
@@ -432,14 +432,14 @@
             background-color: #e2e8f0;
         }
         
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
             border: none;
         }
         
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
             transform: translateY(-2px);
         }
         
@@ -634,31 +634,31 @@
             margin-bottom: 8px;
         }
         
-        /* Account Verification Warning */
-        .verification-warning {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        /* Account Update Notification */
+        .update-notification {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             border-radius: var(--border-radius);
             padding: 25px;
             margin-bottom: 30px;
-            border: 1px solid #fca5a5;
+            border: 1px solid #7dd3fc;
             text-align: center;
         }
         
-        .warning-icon {
+        .update-icon {
             font-size: 48px;
-            color: #ef4444;
+            color: #0ea5e9;
             margin-bottom: 15px;
         }
         
-        .warning-title {
+        .update-title {
             font-size: 22px;
             font-weight: 800;
-            color: #991b1b;
+            color: #0369a1;
             margin-bottom: 10px;
         }
         
-        .warning-message {
-            color: #7f1d1d;
+        .update-message {
+            color: #0c4a6e;
             margin-bottom: 20px;
             line-height: 1.6;
         }
@@ -893,28 +893,28 @@
                     <div class="avatar">H</div>
                     <div>
                         <div style="font-weight: 700;">Harish Barnala</div>
-                        <div style="font-size: 13px; color: #64748b;">Account Verification Required</div>
+                        <div style="font-size: 13px; color: #64748b;">Account Updated & Active</div>
                     </div>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </div>
             </div>
             
-            <!-- Account Verification Warning -->
-            <div class="verification-warning">
-                <div class="warning-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
+            <!-- Account Update Notification -->
+            <div class="update-notification">
+                <div class="update-icon">
+                    <i class="fas fa-check-circle"></i>
                 </div>
-                <div class="warning-title">ACCOUNT VERIFICATION FAILED</div>
-                <div class="warning-message">
-                    Your ₹10,000 withdrawal request has failed due to incomplete account verification.<br>
-                    Please use another bank account or complete KYC verification to proceed.
+                <div class="update-title">ACCOUNT UPDATED SUCCESSFULLY</div>
+                <div class="update-message">
+                    Your bank account has been updated to <strong>Bob Bank</strong> (Account: 44608100001827).<br>
+                    The ₹10,000 withdrawal request is now <strong>pending</strong> and will be processed within 24 hours.
                 </div>
                 <div class="action-buttons" style="margin-top: 20px;">
-                    <button class="btn-action btn-danger" id="kycVerificationBtn">
-                        <i class="fas fa-user-check"></i> Complete KYC Verification
+                    <button class="btn-action btn-primary" id="trackWithdrawalBtn">
+                        <i class="fas fa-search"></i> Track Withdrawal Status
                     </button>
-                    <button class="btn-action btn-primary" id="useOtherAccountBtn">
-                        <i class="fas fa-exchange-alt"></i> Use Another Bank Account
+                    <button class="btn-action btn-secondary" id="viewDetailsBtn">
+                        <i class="fas fa-info-circle"></i> View Account Details
                     </button>
                 </div>
             </div>
@@ -945,11 +945,11 @@
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Bank Name</div>
-                                    <div class="info-value">Kotak Bank</div>
+                                    <div class="info-value">Bob Bank</div>
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Account Number</div>
-                                    <div class="info-value">2545731180</div>
+                                    <div class="info-value">44608100001827</div>
                                 </div>
                             </div>
                         </div>
@@ -965,29 +965,29 @@
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Withdrawal Request</div>
-                                    <div class="info-value">₹10,000 <span class="status-badge status-failed">Failed</span></div>
+                                    <div class="info-value">₹10,000 <span class="status-badge status-pending">Pending</span></div>
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Payment to Account</div>
-                                    <div class="info-value">2545731180</div>
+                                    <div class="info-value">44608100001827</div>
                                 </div>
                                 <div class="info-item">
                                     <div class="info-label">Account Status</div>
-                                    <div class="info-value">Verification Required <span class="status-badge status-failed">Failed</span></div>
+                                    <div class="info-value">Active <span class="status-badge status-success">Verified</span></div>
                                 </div>
                             </div>
                             
                             <div class="highlight-box">
                                 <div class="highlight-title">
-                                    <i class="fas fa-exclamation-circle"></i> Transaction Failed
+                                    <i class="fas fa-info-circle"></i> Transaction Status
                                 </div>
-                                <p><strong>₹10,000 withdrawal has failed due to incomplete account verification.</strong> The Kotak Bank account ending with 1180 could not be verified. Please complete KYC verification or use another bank account to proceed with your withdrawal.</p>
+                                <p><strong>₹10,000 withdrawal is now pending processing.</strong> The amount will be transferred to your Bob Bank account ending with 1827 within 24 hours. Your account has been successfully updated and verified.</p>
                             </div>
                         </div>
                         
                         <div class="action-buttons">
-                            <button class="btn-action btn-primary" id="resubmitWithdrawalBtn">
-                                <i class="fas fa-redo-alt"></i> Resubmit Withdrawal Request
+                            <button class="btn-action btn-primary" id="requestMoreBtn">
+                                <i class="fas fa-plus-circle"></i> Request Additional Funds
                             </button>
                             <button class="btn-action btn-secondary" id="viewStatementBtn">
                                 <i class="fas fa-file-invoice"></i> Download Statement
@@ -1012,7 +1012,11 @@
                             </div>
                             <div class="info-item">
                                 <div class="info-label">Today</div>
-                                <div class="info-value">Withdrawal failed - Account verification</div>
+                                <div class="info-value">Account updated to Bob Bank</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Today</div>
+                                <div class="info-value">Withdrawal status: Pending</div>
                             </div>
                             <div class="info-item">
                                 <div class="info-label">Yesterday</div>
@@ -1021,10 +1025,6 @@
                             <div class="info-item">
                                 <div class="info-label">Yesterday</div>
                                 <div class="info-value">Withdrawal request submitted</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Last Week</div>
-                                <div class="info-value">EMI payment of ₹2,500 made</div>
                             </div>
                         </div>
                     </div>
@@ -1152,12 +1152,12 @@
                     
                     <div class="loan-detail-row">
                         <div class="loan-detail-label">Account Number:</div>
-                        <div class="loan-detail-value">2545731180</div>
+                        <div class="loan-detail-value">44608100001827</div>
                     </div>
                     
                     <div class="loan-detail-row">
                         <div class="loan-detail-label">Bank Name:</div>
-                        <div class="loan-detail-value">Kotak Bank</div>
+                        <div class="loan-detail-value">Bob Bank</div>
                     </div>
                     
                     <div class="loan-detail-row">
@@ -1167,12 +1167,12 @@
                     
                     <div class="loan-detail-row">
                         <div class="loan-detail-label">Withdrawal Request:</div>
-                        <div class="loan-detail-value">₹10,000 <span class="status-badge status-failed">Failed</span></div>
+                        <div class="loan-detail-value">₹10,000 <span class="status-badge status-pending">Pending</span></div>
                     </div>
                     
                     <div class="loan-detail-row">
                         <div class="loan-detail-label">Payment to Account:</div>
-                        <div class="loan-detail-value">2545731180</div>
+                        <div class="loan-detail-value">44608100001827</div>
                     </div>
                     
                     <div class="loan-amount-large">
@@ -1184,7 +1184,7 @@
                             <i class="fas fa-exclamation-circle"></i> Important Note
                         </div>
                         <p>After returning ₹10,000, you are now eligible for a loan of ₹1,50,000. This is based on your excellent repayment history and credit score with MimeLoan.</p>
-                        <p style="margin-top: 10px; color: #991b1b;"><strong>Note:</strong> Your ₹10,000 withdrawal failed due to account verification issues. Please complete KYC or use another account.</p>
+                        <p style="margin-top: 10px; color: #0369a1;"><strong>Note:</strong> Your bank account has been updated to Bob Bank. Withdrawal of ₹10,000 is now pending and will be processed within 24 hours.</p>
                     </div>
                 </div>
                 
@@ -1196,7 +1196,7 @@
             </div>
             
             <div class="footer">
-                <p>© 2023 MimeLoan. Kotak Bank Partnership. All transactions are secure and encrypted.</p>
+                <p>© 2023 MimeLoan. Bob Bank Partnership. All transactions are secure and encrypted.</p>
                 <p style="margin-top: 5px; font-size: 13px;">Contact Support: support@mimeloan.com | Helpline: 1800-202-3040 | Registered Office: Mumbai, India</p>
             </div>
         </div>
@@ -1240,7 +1240,7 @@
                 <div class="form-group">
                     <label for="returnMethod">Select Return Method</label>
                     <select id="returnMethod" class="form-control">
-                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="bank_transfer">Bank Transfer (Bob Bank - 44608100001827)</option>
                         <option value="upi">UPI Payment</option>
                         <option value="card">Credit/Debit Card</option>
                     </select>
@@ -1270,60 +1270,64 @@
         <div class="modal">
             <div class="modal-header">
                 <div class="modal-title">
-                    <i class="fas fa-user-check"></i> Complete KYC Verification
+                    <i class="fas fa-user-check"></i> Account Verification Details
                 </div>
                 <button class="modal-close" id="closeKycModal">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="notification warning">
-                    <p><strong>Important:</strong> Your account verification is incomplete. Please complete KYC to proceed with withdrawals.</p>
+                <div class="notification success">
+                    <p><strong>Verification Complete:</strong> Your Bob Bank account (44608100001827) has been successfully verified.</p>
                 </div>
                 
-                <div class="process-step step-current">
+                <div class="process-step step-completed">
                     <div>
                         <span class="step-number">1</span>
-                        <span class="step-title">Upload Documents</span>
+                        <span class="step-title">Bank Account Verified</span>
                     </div>
                     <div class="step-description">
-                        Upload clear photos of the following documents:
-                        <ul style="margin-left: 20px; margin-top: 8px;">
-                            <li>Aadhaar Card (Front & Back)</li>
-                            <li>PAN Card</li>
-                            <li>Bank Statement (Last 6 months)</li>
-                        </ul>
+                        Bob Bank account ending with 1827 has been successfully verified and linked to your MimeLoan account.
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="aadhaarFront">Aadhaar Card (Front)</label>
-                    <input type="file" id="aadhaarFront" class="form-control" accept="image/*">
-                </div>
-                
-                <div class="form-group">
-                    <label for="aadhaarBack">Aadhaar Card (Back)</label>
-                    <input type="file" id="aadhaarBack" class="form-control" accept="image/*">
-                </div>
-                
-                <div class="form-group">
-                    <label for="panCard">PAN Card</label>
-                    <input type="file" id="panCard" class="form-control" accept="image/*">
+                <div class="process-step step-completed">
+                    <div>
+                        <span class="step-number">2</span>
+                        <span class="step-title">KYC Documents Verified</span>
+                    </div>
+                    <div class="step-description">
+                        Your KYC documents have been verified and your account is now fully active.
+                    </div>
                 </div>
                 
                 <div class="process-step">
                     <div>
-                        <span class="step-number">2</span>
-                        <span class="step-title">Video Verification</span>
+                        <span class="step-number">3</span>
+                        <span class="step-title">Withdrawal Processing</span>
                     </div>
                     <div class="step-description">
-                        After document upload, our executive will schedule a video call for verification.
+                        Your ₹10,000 withdrawal is currently pending and will be processed to your Bob Bank account within 24 hours.
                     </div>
+                </div>
+                
+                <div class="info-item" style="margin-top: 20px;">
+                    <div class="info-label">Verified Bank Account</div>
+                    <div class="info-value">Bob Bank - 44608100001827</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Verification Status</div>
+                    <div class="info-value">Completed <span class="status-badge status-success">Verified</span></div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Withdrawal Status</div>
+                    <div class="info-value">₹10,000 <span class="status-badge status-pending">Pending</span></div>
                 </div>
                 
                 <div id="kycNotification" class="notification" style="margin-top: 20px; display: none;"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" id="cancelKyc">Cancel</button>
-                <button class="btn-primary" id="submitKyc">Submit KYC Documents</button>
+                <button class="btn-primary" id="closeKyc">Close</button>
             </div>
         </div>
     </div>
@@ -1339,9 +1343,8 @@
         const requestMoreBtn = document.getElementById('requestMoreBtn');
         const viewStatementBtn = document.getElementById('viewStatementBtn');
         const newLoanRequestBtn = document.getElementById('newLoanRequestBtn');
-        const kycVerificationBtn = document.getElementById('kycVerificationBtn');
-        const useOtherAccountBtn = document.getElementById('useOtherAccountBtn');
-        const resubmitWithdrawalBtn = document.getElementById('resubmitWithdrawalBtn');
+        const trackWithdrawalBtn = document.getElementById('trackWithdrawalBtn');
+        const viewDetailsBtn = document.getElementById('viewDetailsBtn');
         
         // Payment elements
         const cardPaymentForm = document.getElementById('cardPaymentForm');
@@ -1362,8 +1365,7 @@
         // KYC Modal elements
         const kycModal = document.getElementById('kycModal');
         const closeKycModal = document.getElementById('closeKycModal');
-        const cancelKyc = document.getElementById('cancelKyc');
-        const submitKyc = document.getElementById('submitKyc');
+        const closeKyc = document.getElementById('closeKyc');
         const kycNotification = document.getElementById('kycNotification');
         
         // Tabs
@@ -1436,20 +1438,14 @@
             showLogin();
         });
         
-        // KYC Verification button
-        kycVerificationBtn.addEventListener('click', function() {
+        // Track Withdrawal button
+        trackWithdrawalBtn.addEventListener('click', function() {
+            alert('Withdrawal Status: PENDING\n\n₹10,000 withdrawal to Bob Bank account (44608100001827) is being processed.\nEstimated completion: Within 24 hours\n\nYou will receive an SMS notification once the transaction is complete.');
+        });
+        
+        // View Details button
+        viewDetailsBtn.addEventListener('click', function() {
             kycModal.style.display = 'flex';
-            kycNotification.style.display = 'none';
-        });
-        
-        // Use Another Account button
-        useOtherAccountBtn.addEventListener('click', function() {
-            alert('Please enter your new bank account details:\n\n1. Account Holder Name\n2. Account Number\n3. IFSC Code\n4. Bank Name\n\nWe will update your account and verify it within 24 hours.');
-        });
-        
-        // Resubmit Withdrawal button
-        resubmitWithdrawalBtn.addEventListener('click', function() {
-            alert('Please complete KYC verification or update your bank account details before resubmitting withdrawal request.');
         });
         
         // Apply for loan button - NEW FLOW
@@ -1496,7 +1492,7 @@
         
         function getMethodName(method) {
             switch(method) {
-                case 'bank_transfer': return 'Bank Transfer';
+                case 'bank_transfer': return 'Bank Transfer (Bob Bank)';
                 case 'upi': return 'UPI Payment';
                 case 'card': return 'Credit/Debit Card';
                 default: return 'Selected Method';
@@ -1584,35 +1580,12 @@
             paymentNotification.scrollIntoView({ behavior: 'smooth' });
         });
         
-        // Submit KYC button
-        submitKyc.addEventListener('click', function() {
-            const aadhaarFront = document.getElementById('aadhaarFront').value;
-            const aadhaarBack = document.getElementById('aadhaarBack').value;
-            const panCard = document.getElementById('panCard').value;
-            
-            if (!aadhaarFront || !aadhaarBack || !panCard) {
-                kycNotification.textContent = 'Please upload all required documents.';
-                kycNotification.className = 'notification error';
-                kycNotification.style.display = 'block';
-                return;
-            }
-            
-            kycNotification.textContent = 'KYC documents submitted successfully! Verification will be completed within 24 hours.';
-            kycNotification.className = 'notification success';
-            kycNotification.style.display = 'block';
-            
-            setTimeout(() => {
-                alert('KYC submitted successfully! Our team will verify your documents and update your account status within 24 hours.');
-                kycModal.style.display = 'none';
-            }, 2000);
-        });
-        
         // Close KYC modal
         closeKycModal.addEventListener('click', function() {
             kycModal.style.display = 'none';
         });
         
-        cancelKyc.addEventListener('click', function() {
+        closeKyc.addEventListener('click', function() {
             kycModal.style.display = 'none';
         });
         
